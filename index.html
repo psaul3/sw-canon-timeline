@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- Resource: http://starwars.wikia.com/wiki/Timeline_of_canon_books -->
+<html ng-app="swcanon">
+    <head>
+        <link rel="stylesheet" href="normalize.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="angular.min.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body ng-controller="BooksController as library">
+        <div>
+            <!-- Nav -->
+            <nav-bar></nav-bar>
+            <!-- /Nav -->
+            <!-- Form -->
+            <form-addbook ng-show="nav.isSelected(2)"></form-addbook>
+        </div>
+        <!-- Main -->
+        <div class="container" ng-controller="FilmsController as media">
+            <!-- Main: Library -->
+            <div class="row" ng-repeat="f in media.films">
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{f.title + ": " + f.subtitle}}</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4" ng-repeat="book in library.books | orderBy:'timelineOrder' | filter:{title:searchText, afterFilm:f.episode}">
+                        <div class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">{{book.title}}</h4>
+                                <em>{{book.author}}</em>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <img ng-src="{{book.images[1]}}" class="img-responsive center-block img-thumbnail"/>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        {{book.publisher}}, {{book.pubYr}}
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="panel-footer">
+                                {{book.isbn}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            
+            <!-- Main: Library -->
+        </div>
+        <!-- /Main -->
+    </body>
+
+</html>
